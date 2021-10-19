@@ -1,0 +1,31 @@
+@import '../../scss/global';
+
+.tile {
+	border-radius: 10px;
+	padding: 1em;
+	height: 150px;
+	max-width: 95%;
+}
+.main-tile {
+	background: rgb(232, 77, 112);
+	background: radial-gradient(
+		circle,
+		rgba(232, 77, 112, 1) 0%,
+		rgba(163, 55, 246, 1) 50%,
+		rgba(40, 167, 237, 1) 100%
+	);
+	color: #ffffff;
+	text-align: left;
+	display: flex;
+
+	span {
+		align-self: flex-end;
+		h3 {
+			font-size: 1.5rem;
+		}
+		p {
+			font-size: 0.9rem;
+			font-weight: none;
+		}
+	}
+}
