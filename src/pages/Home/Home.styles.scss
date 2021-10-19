@@ -4,84 +4,12 @@
 	margin-top: 20px;
 
 	.feedback-area {
-		border: solid black 1px;
 		padding: 0;
-		.banner {
-			background-color: $tertiary;
-			color: $white;
-			width: 100%;
-			border-radius: 7px;
-			padding: 20px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
 
-			&-icon {
-				display: flex;
-				align-items: center;
-				a {
-					img {
-						width: 20px;
-						height: 25px;
-					}
-				}
-				.suggestions__amount {
-					margin: 0 25px 0 15px;
-				}
-			}
+		.feedback-cards {
+			border: 1px solid black;
 
-			.add-btn {
-				align-self: flex-end;
-				button {
-					background-color: $primary;
-					border: none;
-
-					&:hover {
-						background-color: $primary-hover;
-					}
-				}
-			}
+			margin-top: 10px;
 		}
 	}
-}
-
-.dropdown-type {
-	font-size: 0.8rem;
-	color: $gray;
-}
-
-// Bootstrap class modifications
-
-.dropdown-toggle {
-	color: $white;
-}
-
-.dropdown-toggle:hover {
-	color: $off-white;
-}
-.dropdown-menu {
-	top: 4rem;
-	padding: 0;
-	width: 120%;
-}
-
-.dropdown-item {
-	color: $desaturated-dark-blue;
-	font-weight: lighter;
-	border-bottom: $gray 1px solid;
-	padding: 10px 10px;
-	display: flex;
-	justify-content: space-between;
-}
-
-.dropdown-item:hover {
-	color: $primary;
-}
-
-.checkmark-active {
-	display: block;
-	color: $primary;
-}
-.checkmark-not-active {
-	display: none;
 }
