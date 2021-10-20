@@ -1,0 +1,42 @@
+@import '../../scss/global';
+
+.no-feedback {
+	height: 30em;
+	background-color: $white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.no-feedback-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			display: block;
+			width: 129px;
+			height: 136px;
+			margin-bottom: 25px;
+		}
+
+		h2 {
+			color: $dark-moderate-blue;
+		}
+
+		p {
+			text-align: center;
+			width: 64%;
+			color: $gray;
+		}
+
+		button {
+			background-color: $primary;
+			border: none;
+
+			&:hover {
+				background-color: $primary-hover;
+			}
+		}
+	}
+}
