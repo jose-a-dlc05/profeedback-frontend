@@ -1,0 +1,49 @@
+@import '../../scss/global';
+
+.feedback-card {
+				background-color: $white;
+				color: $dark-moderate-blue;
+				height: 151px;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				border-radius: 10px;
+
+				.upvote-btn {
+					width: 40px;
+					height: 53px;
+					align-self: flex-start;
+					margin-top: 30px;
+					display: flex;
+					flex-direction: column;
+					background-color: $off-white;
+					border-radius: 10px;
+					span {
+						margin: 0 auto;
+					}
+				}
+
+				.card-overview {
+					margin-right: 20rem;
+					p {
+						color: $desaturated-dark-blue;
+					}
+					span {
+						background-color: $off-white;
+						color: $dark-moderate-blue;
+						padding: 5px 10px;
+						border-radius: 12px;
+					}
+				}
+
+				.comment {
+					margin-left: 3rem;
+					span {
+						margin: 0 5px;
+					}
+					.fa-comment {
+						color: $light-gray;
+					}
+				}
+			}

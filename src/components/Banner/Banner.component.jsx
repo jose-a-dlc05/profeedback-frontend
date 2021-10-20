@@ -10,7 +10,7 @@ function Banner() {
 					<img src={image} alt='product feedback logo' />
 				</a>
 				<span className='suggestions__amount'>0 Suggestions</span>
-				<div className='dropdown'>
+				<div className='dropdown' style={{ visibility: 'hidden' }}>
 					<span className='dropdown-type'>Sort by:</span>
 					<button
 						className='btn dropdown-toggle'

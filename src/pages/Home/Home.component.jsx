@@ -1,7 +1,7 @@
 import React from 'react';
 import Tile from '../../components/Tile/Tile.component';
 import Banner from '../../components/Banner/Banner.component';
-import EmptyFeedback from '../../components/NoFeedback/NoFeedback.component';
+import FeedbackCards from '../../components/FeedbackCards/FeedbackCards.component';
 import './Home.styles.scss';
 
 function Home() {
@@ -17,9 +17,7 @@ function Home() {
 			</div>
 			<div className='col-8 feedback-area'>
 				<Banner />
-				<div className='feedback-cards'>
-					<EmptyFeedback />
-				</div>
+				<FeedbackCards />
 			</div>
 		</div>
 	);
