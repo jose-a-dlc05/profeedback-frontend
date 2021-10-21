@@ -1,0 +1,100 @@
+@import '../../scss/global';
+
+.input-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.input-form-item--top,
+	.input-form-item--bottom {
+		height: 2rem;
+	}
+
+	.feedback {
+		width: 540px;
+
+		form {
+			margin-top: 3rem;
+			background-color: $white;
+			height: 86.4%;
+			border-radius: 10px;
+			padding: 30px;
+			position: relative;
+
+			.form-icon {
+				width: 50px;
+				height: 50px;
+				background: rgb(232, 77, 112);
+				background: radial-gradient(
+					circle,
+					rgba(232, 77, 112, 1) 0%,
+					rgba(163, 55, 246, 1) 50%,
+					rgba(40, 167, 237, 1) 100%
+				);
+				color: #ffffff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 25px;
+				border: none;
+				position: absolute;
+				top: -25px;
+			}
+
+			.add-feedback-inputs {
+				.add-feedback-title {
+					color: $dark-moderate-blue;
+					font-size: 24px;
+				}
+
+				.feedback-title-input,
+				.category-input,
+				.detail-input {
+					width: 29.8rem;
+					height: 2.5rem;
+					background-color: $eggshell;
+					border: none;
+					border-radius: 10px;
+				}
+
+				.category-input {
+					padding: 0 10px;
+				}
+			}
+		}
+	}
+}
+
+.go-back-link {
+	text-decoration: none;
+	color: $desaturated-dark-blue;
+}
+
+.fa-angle-left {
+	margin-right: 15px;
+}
+
+label {
+	display: block;
+	margin-top: 15px;
+}
+
+.buttons {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: row-reverse;
+
+	.btn-add {
+		background-color: $primary;
+		color: $white;
+		border-radius: 10px;
+	}
+
+	.btn-cancel {
+		margin-right: 10px;
+		background-color: $dark-moderate-blue;
+		color: $white;
+		border-radius: 10px;
+	}
+}
