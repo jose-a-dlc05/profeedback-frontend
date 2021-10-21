@@ -46,6 +46,7 @@
 				.add-feedback-title {
 					color: $dark-moderate-blue;
 					font-size: 24px;
+					margin-top: 15px;
 				}
 
 				.feedback-title-input,
@@ -60,6 +61,11 @@
 
 				.category-input {
 					padding: 0 10px;
+				}
+
+				.detail-input {
+					color: $dark-moderate-blue;
+					height: 100px;
 				}
 			}
 		}
@@ -78,6 +84,15 @@
 label {
 	display: block;
 	margin-top: 15px;
+	span {
+		color: $dark-moderate-blue;
+		font-size: 0.8rem;
+		font-weight: 900;
+	}
+	p {
+		font-size: 0.7rem;
+		color: $gray;
+	}
 }
 
 .buttons {
