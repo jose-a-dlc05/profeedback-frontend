@@ -3,7 +3,17 @@ import { Link } from 'react-router-dom';
 import './NewFeedback.styles.scss';
 
 function NewFeedback() {
-	const [category, setCategory] = useState('Feature');
+	const [initialInputState, setInputState] = useState({
+		feedbacktitle: '',
+		category: 'feature',
+		feedbackdetail: '',
+	});
+
+	// Changes the fields on change based on the input field name
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setInputState((prevState) => ({ ...prevState, [name]: value }));
+	};
 	return (
 		<div className='input-form'>
 			<div className='input-form-item--top'></div>
@@ -28,13 +38,20 @@ function NewFeedback() {
 							<input
 								type='text'
 								className='feedback-title-input'
-								name='feedback-title'
+								name='feedbacktitle'
+								value={initialInputState.feedbacktitle}
+								onChange={handleChange}
 							/>
 						</label>
 						<label>
 							<span>Category</span>
 							<p>Choose a category for your feedback</p>
-							<select value={category} className='category-input'>
+							<select
+								value={initialInputState.category}
+								onChange={handleChange}
+								className='category-input'
+								name='category'
+							>
 								<option value='Feature'>Feature</option>
 								<option value='UI'>UI</option>
 								<option value='UX'>UX</option>
@@ -48,7 +65,13 @@ function NewFeedback() {
 								Include any specific comments on what should be improved, added,
 								etc.
 							</p>
-							<textarea className='detail-input' maxlength='255'></textarea>
+							<textarea
+								className='detail-input'
+								value={initialInputState.feedbackdetail}
+								onChange={handleChange}
+								name='feedbackdetail'
+								maxLength='255'
+							></textarea>
 						</label>
 					</div>
 					<div className='buttons'>
