@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, Redirect, Switch } from 'react-router-dom';
 import './NewFeedback.styles.scss';
 
-function NewFeedback() {
+function NewFeedback({ history }) {
 	const [inputState, setInputState] = useState({
 		feedback_title: '',
 		category: 'feature',
@@ -35,14 +35,13 @@ function NewFeedback() {
 			category,
 			feedback_detail,
 		};
-		// console.log('new feedback submitted', newFeedback);
 		await axios
 			.post('https://feedbackproduct.herokuapp.com/', newFeedback)
 			.catch((err) => {
 				console.log('Err: ', err);
 			});
-		console.log('feedback submitted');
 		clearState();
+		history.push('/');
 		// setFeedbackSubmitted(true);
 	};
 	// if (feedbackSubmitted === true) {
