@@ -1,19 +1,55 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, Redirect, Switch } from 'react-router-dom';
 import './NewFeedback.styles.scss';
 
 function NewFeedback() {
-	const [initialInputState, setInputState] = useState({
-		feedbacktitle: '',
+	const [inputState, setInputState] = useState({
+		feedback_title: '',
 		category: 'feature',
-		feedbackdetail: '',
+		feedback_detail: '',
 	});
+	const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
 	// Changes the fields on change based on the input field name
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setInputState((prevState) => ({ ...prevState, [name]: value }));
 	};
+
+	// Returns all values back to initial state
+	const clearState = () => {
+		setInputState({
+			feedback_title: '',
+			category: 'feature',
+			feedback_detail: '',
+		});
+	};
+
+	// Submit data to api
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const { feedback_title, category, feedback_detail } = inputState;
+		const newFeedback = {
+			feedback_title,
+			category,
+			feedback_detail,
+		};
+		// console.log('new feedback submitted', newFeedback);
+		await axios
+			.post('https://feedbackproduct.herokuapp.com/', newFeedback)
+			.catch((err) => {
+				console.log('Err: ', err);
+			});
+		console.log('feedback submitted');
+		clearState();
+		// setFeedbackSubmitted(true);
+	};
+	// if (feedbackSubmitted === true) {
+	// 	<Switch>
+	// 		<Redirect to='/' />
+	// 	</Switch>;
+	// }
 	return (
 		<div className='input-form'>
 			<div className='input-form-item--top'></div>
@@ -38,8 +74,8 @@ function NewFeedback() {
 							<input
 								type='text'
 								className='feedback-title-input'
-								name='feedbacktitle'
-								value={initialInputState.feedbacktitle}
+								name='feedback_title'
+								value={inputState.feedback_title}
 								onChange={handleChange}
 							/>
 						</label>
@@ -47,7 +83,7 @@ function NewFeedback() {
 							<span>Category</span>
 							<p>Choose a category for your feedback</p>
 							<select
-								value={initialInputState.category}
+								value={inputState.category}
 								onChange={handleChange}
 								className='category-input'
 								name='category'
@@ -67,19 +103,23 @@ function NewFeedback() {
 							</p>
 							<textarea
 								className='detail-input'
-								value={initialInputState.feedbackdetail}
+								value={inputState.feedback_detail}
 								onChange={handleChange}
-								name='feedbackdetail'
+								name='feedback_detail'
 								maxLength='255'
 							></textarea>
 						</label>
 					</div>
 					<div className='buttons'>
-						<button type='button' className='btn btn-add'>
+						<button
+							type='button'
+							className='btn btn-add'
+							onClick={handleSubmit}
+						>
 							Add Feedback
 						</button>
 						<Link to='/' className='go-back-link'>
-							<button type='button' className='btn btn-cancel'>
+							<button type='submit' className='btn btn-cancel'>
 								Cancel
 							</button>
 						</Link>

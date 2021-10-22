@@ -23,7 +23,6 @@ function FeedbackCards() {
 	useEffect(() => {
 		fetchFeedback();
 	}, []);
-
 	if (amount === 0) {
 		return <EmptyFeedback />;
 	}
