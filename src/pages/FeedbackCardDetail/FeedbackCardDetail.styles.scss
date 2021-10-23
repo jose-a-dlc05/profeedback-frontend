@@ -1,0 +1,36 @@
+@import '../../scss/global';
+
+.feedback-card-detail {
+	width: 730px;
+	margin: 0 auto;
+	margin-top: 4rem;
+	.feedback-detail {
+		.feedback-control {
+			display: flex;
+			justify-content: space-between;
+
+			.link-wrapper {
+				display: flex;
+				align-items: center;
+			}
+			.go-back-link {
+				display: block;
+			}
+
+			.btn-edit {
+				background-color: $secondary;
+				color: $white;
+				border-radius: 10px;
+				display: block;
+			}
+		}
+	}
+}
+
+.comment-card {
+	margin-top: 25px;
+	background-color: $white;
+	color: $dark-moderate-blue;
+	width: 100%;
+	border-radius: 10px;
+}
