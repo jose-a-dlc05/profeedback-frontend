@@ -67,6 +67,17 @@ function EditFeedback({ match, history }) {
 		history.push('/');
 	};
 
+	// Deletes the feedback
+	const deleteFeedback = async () => {
+		const { id } = feedbackData;
+		await axios
+			.delete(`https://feedbackproduct.herokuapp.com/${id}`)
+			.catch((err) => {
+				console.log('Err: ', err);
+			});
+		history.push('/');
+	};
+
 	// Changes the fields on change based on the input field name
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -176,7 +187,11 @@ function EditFeedback({ match, history }) {
 								</Link>
 							</div>
 							<div className='btn-delete'>
-								<button type='button' className='btn-danger '>
+								<button
+									type='button'
+									className='btn-danger'
+									onClick={deleteFeedback}
+								>
 									Delete
 								</button>
 							</div>

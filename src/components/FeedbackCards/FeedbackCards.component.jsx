@@ -24,6 +24,8 @@ function FeedbackCards() {
 		fetchFeedback();
 	}, []);
 
+	console.log(feedback);
+
 	if (amount === 0) {
 		return <EmptyFeedback />;
 	}
