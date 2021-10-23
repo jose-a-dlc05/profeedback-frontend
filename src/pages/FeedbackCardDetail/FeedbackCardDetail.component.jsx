@@ -47,9 +47,14 @@ function FeedbackCardDetail({ match }) {
 							Go Back
 						</Link>
 					</div>
-					<button type='button' className='btn btn-edit'>
-						Edit Feedback
-					</button>
+					<Link
+						to={`/edit-feedback/${match.params.id}`}
+						className='edit-feedback-link'
+					>
+						<button type='button' className='btn btn-edit'>
+							Edit Feedback
+						</button>
+					</Link>
 				</div>
 				<div className='feedback-card' style={{ marginTop: '25px' }}>
 					{/*	<div className='upvote-btn'>
