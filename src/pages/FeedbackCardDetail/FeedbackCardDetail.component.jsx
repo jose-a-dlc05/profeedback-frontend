@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Comments from '../../components/Comments/Comments.component';
 import axios from 'axios';
 import './FeedbackCardDetail.styles.scss';
 
@@ -30,13 +31,10 @@ function FeedbackCardDetail({ match }) {
 		getComments();
 	}, []);
 
-	console.log(singleFeedback);
-	console.log(comments);
-
 	if (singleFeedback === null) {
 		return <div></div>;
 	}
-
+	const commentNumber = Number(typeof comments !== 'string' && comments.length);
 	return (
 		<div className='feedback-card-detail'>
 			<div className='feedback-detail'>
@@ -54,10 +52,10 @@ function FeedbackCardDetail({ match }) {
 					</button>
 				</div>
 				<div className='feedback-card' style={{ marginTop: '25px' }}>
-					<div className='upvote-btn'>
-						{/* <span className='arrow-up'>^</span>
-					<span className='upvote-number'>{data.upvotes}</span> */}
-					</div>
+					{/*	<div className='upvote-btn'>
+					 <span className='arrow-up'>^</span>
+					<span className='upvote-number'>{data.upvotes}</span> 
+					</div>*/}
 					<div className='card-overview'>
 						<h4>{singleFeedback[0].title}</h4>
 						<p>{singleFeedback[0].description}</p>
@@ -67,11 +65,18 @@ function FeedbackCardDetail({ match }) {
 						<span>
 							<i className='fas fa-comment'></i>
 						</span>
-						<span>{Number(comments.length)}</span>
+						<span>{commentNumber}</span>
 					</div>
 				</div>
 			</div>
-			<div className='comment-card'>Comments</div>
+			{commentNumber ? (
+				<div className='comment-box'>
+					<h5 className='comment-number'>{commentNumber} Comments</h5>
+					{<Comments details={comments} />}
+				</div>
+			) : (
+				<div className='comment-box'>{comments}</div>
+			)}
 		</div>
 	);
 }

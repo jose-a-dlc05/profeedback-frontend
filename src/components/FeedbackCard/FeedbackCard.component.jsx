@@ -5,10 +5,6 @@ import './FeedbackCard.styles.scss';
 function FeedbackCard({ data }) {
 	return (
 		<div className='feedback-card'>
-			<div className='upvote-btn'>
-				{/* <span className='arrow-up'>^</span>
-					<span className='upvote-number'>{data.upvotes}</span> */}
-			</div>
 			<div className='card-overview'>
 				<Link to={`/feedback-product/${data.id}`}>
 					<h4>{data.title}</h4>{' '}
