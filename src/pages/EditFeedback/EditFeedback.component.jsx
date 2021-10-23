@@ -3,14 +3,25 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './EditFeedback.styles.scss';
 
-function EditFeedback({ match }) {
+function EditFeedback({ match, history }) {
 	const [feedbackData, setFeedbackData] = useState({
 		id: '',
 		feedback_title: '',
+		feedback_header: '',
 		category: '',
 		status: '',
 		feedback_detail: '',
 	});
+
+	// Returns all values back to initial state
+	const clearState = () => {
+		setFeedbackData({
+			feedback_title: '',
+			category: 'feature',
+			status: 'suggestion',
+			feedback_detail: '',
+		});
+	};
 	// Fetch Single Feedback
 	const fetchSingleFeedback = async () => {
 		const response = await axios
@@ -22,10 +33,38 @@ function EditFeedback({ match }) {
 		setFeedbackData({
 			id: response.data[0].id,
 			feedback_title: response.data[0].title,
+			feedback_header: response.data[0].title,
 			category: response.data[0].category,
 			status: response.data[0].status,
 			feedback_detail: response.data[0].description,
 		});
+	};
+
+	// Submit updated data to api
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const { id, feedback_title, category, status, feedback_detail } =
+			feedbackData;
+		const updatedFeedback = {
+			id,
+			feedback_title,
+			category,
+			status,
+			feedback_detail,
+		};
+
+		await axios
+			.put(`https://feedbackproduct.herokuapp.com/${updatedFeedback.id}`, {
+				title: feedback_title,
+				category,
+				status,
+				description: feedback_detail,
+			})
+			.catch((err) => {
+				console.log('Err: ', err);
+			});
+		clearState();
+		history.push('/');
 	};
 
 	// Changes the fields on change based on the input field name
@@ -38,7 +77,6 @@ function EditFeedback({ match }) {
 		fetchSingleFeedback();
 	}, []);
 
-	console.log(feedbackData);
 	if (feedbackData !== null) {
 		return (
 			<div className='input-form'>
@@ -61,7 +99,7 @@ function EditFeedback({ match }) {
 							<i className='fas fa-pen-nib'></i>
 						</div>
 						<div className='add-feedback-inputs'>
-							<h4 className='add-feedback-title'>{`Editing '${feedbackData.feedback_title}'`}</h4>
+							<h4 className='add-feedback-title'>{`Editing '${feedbackData.feedback_header}'`}</h4>
 							<label>
 								<span>Feedback Title</span>
 								<p>Add a short, descriptive headline</p>
@@ -70,6 +108,7 @@ function EditFeedback({ match }) {
 									className='feedback-title-input'
 									name='feedback_title'
 									value={feedbackData.feedback_title}
+									onChange={handleChange}
 								/>
 							</label>
 							<label>
@@ -79,6 +118,7 @@ function EditFeedback({ match }) {
 									value={feedbackData.category}
 									className='category-input'
 									name='category'
+									onChange={handleChange}
 								>
 									<option value='feature'>Feature</option>
 									<option value='ui'>UI</option>
@@ -94,6 +134,7 @@ function EditFeedback({ match }) {
 									value={feedbackData.status}
 									className='category-input'
 									name='status'
+									onChange={handleChange}
 								>
 									<option value='suggestion'>Suggestion</option>
 									<option value='planned'>Planned</option>
@@ -112,11 +153,16 @@ function EditFeedback({ match }) {
 									name='feedback_detail'
 									maxLength='255'
 									value={feedbackData.feedback_detail}
+									onChange={handleChange}
 								></textarea>
 							</label>
 						</div>
 						<div className='buttons'>
-							<button type='button' className='btn btn-add'>
+							<button
+								type='button'
+								className='btn btn-add'
+								onClick={handleSubmit}
+							>
 								Add Feedback
 							</button>
 							<button type='submit' className='btn btn-cancel'>
