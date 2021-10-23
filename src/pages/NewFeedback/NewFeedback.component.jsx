@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, Redirect, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NewFeedback.styles.scss';
 
 function NewFeedback({ history }) {
@@ -9,7 +9,6 @@ function NewFeedback({ history }) {
 		category: 'feature',
 		feedback_detail: '',
 	});
-	const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
 	// Changes the fields on change based on the input field name
 	const handleChange = (event) => {
@@ -42,13 +41,8 @@ function NewFeedback({ history }) {
 			});
 		clearState();
 		history.push('/');
-		// setFeedbackSubmitted(true);
 	};
-	// if (feedbackSubmitted === true) {
-	// 	<Switch>
-	// 		<Redirect to='/' />
-	// 	</Switch>;
-	// }
+
 	return (
 		<div className='input-form'>
 			<div className='input-form-item--top'></div>
