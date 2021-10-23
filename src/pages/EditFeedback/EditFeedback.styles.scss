@@ -1,0 +1,16 @@
+.edit-panel {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+
+	.btn-delete {
+		display: flex;
+		align-items: center;
+		.btn-danger {
+			align-self: flex-end;
+			border-radius: 10px;
+			padding: 0.4rem 1rem;
+			border: none;
+		}
+	}
+}

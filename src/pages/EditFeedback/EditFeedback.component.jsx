@@ -157,17 +157,29 @@ function EditFeedback({ match, history }) {
 								></textarea>
 							</label>
 						</div>
-						<div className='buttons'>
-							<button
-								type='button'
-								className='btn btn-add'
-								onClick={handleSubmit}
-							>
-								Add Feedback
-							</button>
-							<button type='submit' className='btn btn-cancel'>
-								Cancel
-							</button>
+						<div className='edit-panel'>
+							<div className='buttons'>
+								<button
+									type='button'
+									className='btn btn-add'
+									onClick={handleSubmit}
+								>
+									Save Changes
+								</button>
+								<Link
+									to={`/feedback-product/${feedbackData.id}`}
+									className='go-back-link'
+								>
+									<button type='submit' className='btn btn-cancel'>
+										Cancel
+									</button>
+								</Link>
+							</div>
+							<div className='btn-delete'>
+								<button type='button' className='btn-danger '>
+									Delete
+								</button>
+							</div>
 						</div>
 					</form>
 				</div>
