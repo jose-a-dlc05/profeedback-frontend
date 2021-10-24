@@ -34,11 +34,14 @@ function NewFeedback({ history }) {
 			category,
 			feedback_detail,
 		};
-		await axios
-			.post('https://feedbackproduct.herokuapp.com/', newFeedback)
-			.catch((err) => {
-				console.log('Err: ', err);
-			});
+		if (feedback_detail || feedback_detail) {
+			await axios
+				.post('https://feedbackproduct.herokuapp.com/', newFeedback)
+				.catch((err) => {
+					console.log('Err: ', err);
+				});
+		}
+
 		clearState();
 		history.push('/');
 	};
