@@ -10,7 +10,7 @@ function Home() {
 			<div className='col-3 offset-1 control-tiles'>
 				<Tile className='main-tile'>
 					<span>
-						<h3>Pro Feedback</h3>
+						<h3>ProFeedback</h3>
 						<p>Feedback Board</p>
 					</span>
 				</Tile>

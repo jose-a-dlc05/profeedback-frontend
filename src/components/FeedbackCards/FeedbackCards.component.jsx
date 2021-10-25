@@ -10,6 +10,7 @@ function FeedbackCards() {
 	const { feedback, amount } = useSelector((state) => state.allFeedback);
 
 	const dispatch = useDispatch();
+
 	// Fetch Feedback
 	const fetchFeedback = async () => {
 		const response = await axios
