@@ -1,4 +1,5 @@
 # ProFeedback
+
 <img alt="App Logo" src="https://drive.google.com/uc?export=view&id=1jk30b4NWr0_7xd3UeJ4itf5h1JWVcc7b" width="200">
 
 ## Product Feedback Portal
@@ -15,9 +16,13 @@ ProFeedback is a product feedback portal where users can submit any suggestions,
 # How to navigate this project
 Assuming you are well versed in React and Redux, if you want to take a look at the code overall, the best place to start is the App component, as you can see I have imported the pages I have coming from the page folder along with the BrowserRouter and the Switch and Route components as well.
 
+
 <img alt="Product Feedback App Structure" src="https://drive.google.com/uc?export=view&id=17w5OmSFqXe-yJdHaUXXFRL-HLDpuKS1f" width="400">
 
+
+
 <img alt="Product Feeback App Component" src="https://drive.google.com/uc?export=view&id=19e1zjdtU7Nim2XOHetRaYZ2Bm-_C7G6F" width="400">
+
 
 # If I had more time I would change this
 Add more functionality beyond the main CRUD functionality:
