@@ -36,7 +36,7 @@ function NewFeedback({ history }) {
 		};
 		if (feedback_detail || feedback_detail) {
 			await axios
-				.post('https://feedbackproduct.herokuapp.com/', newFeedback)
+				.post('https://product-feedback-api-t6wx.onrender.com/', newFeedback)
 				.catch((err) => {
 					console.log('Err: ', err);
 				});

@@ -25,7 +25,7 @@ function EditFeedback({ match, history }) {
 	// Fetch Single Feedback
 	const fetchSingleFeedback = async () => {
 		const response = await axios
-			.get(`https://feedbackproduct.herokuapp.com/${match.params.id}`)
+			.get(`https://product-feedback-api-t6wx.onrender.com/${match.params.id}`)
 			.catch((err) => {
 				console.log('Err: ', err);
 			});
@@ -86,7 +86,7 @@ function EditFeedback({ match, history }) {
 
 	useEffect(() => {
 		fetchSingleFeedback();
-	}, []);
+	});
 
 	if (feedbackData !== null) {
 		return (

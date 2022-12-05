@@ -14,7 +14,7 @@ function FeedbackCards() {
 	// Fetch Feedback
 	const fetchFeedback = async () => {
 		const response = await axios
-			.get('https://feedbackproduct.herokuapp.com/')
+			.get('https://product-feedback-api-t6wx.onrender.com/')
 			.catch((err) => {
 				console.log('Err: ', err);
 			});
@@ -23,7 +23,7 @@ function FeedbackCards() {
 
 	useEffect(() => {
 		fetchFeedback();
-	}, []);
+	});
 
 	if (amount === 0) {
 		return <EmptyFeedback />;
