@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 import './EditFeedback.styles.scss';
 
-function EditFeedback({ match, history }) {
+interface MatchParams {
+	id: string;
+}
+
+function EditFeedback({ match, history }: RouteComponentProps<MatchParams>) {
 	const [feedbackData, setFeedbackData] = useState({
 		id: '',
 		feedback_title: '',
@@ -16,7 +20,9 @@ function EditFeedback({ match, history }) {
 	// Returns all values back to initial state
 	const clearState = () => {
 		setFeedbackData({
+			id: '',
 			feedback_title: '',
+			feedback_header: '',
 			category: 'feature',
 			status: 'suggestion',
 			feedback_detail: '',
@@ -25,11 +31,12 @@ function EditFeedback({ match, history }) {
 	// Fetch Single Feedback
 	const fetchSingleFeedback = async () => {
 		const response = await axios
-			.get(`https://product-feedback-api-t6wx.onrender.com/${match.params.id}`)
+			// .get(`https://product-feedback-api-t6wx.onrender.com/${match.params.id}`)
+			.get(`http://localhost:8000/${match.params.id}`)
 			.catch((err) => {
 				console.log('Err: ', err);
 			});
-
+		console.log(response);
 		setFeedbackData({
 			id: response.data[0].id,
 			feedback_title: response.data[0].title,
@@ -41,7 +48,7 @@ function EditFeedback({ match, history }) {
 	};
 
 	// Submit updated data to api
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event: any) => {
 		event.preventDefault();
 		const { id, feedback_title, category, status, feedback_detail } =
 			feedbackData;
@@ -86,7 +93,7 @@ function EditFeedback({ match, history }) {
 
 	useEffect(() => {
 		fetchSingleFeedback();
-	});
+	}, []);
 
 	if (feedbackData !== null) {
 		return (

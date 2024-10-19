@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Banner() {
-	const feedbackAmount = useSelector((state) => state.allFeedback.amount);
+	const feedbackAmount = useSelector(
+		(state: { allFeedback: { amount: number } }) => state.allFeedback.amount
+	);
 	return (
 		<div className='banner'>
 			<div className='banner-icon'>

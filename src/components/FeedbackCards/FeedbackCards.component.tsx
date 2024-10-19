@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import fetchFeedback, { Feedback } from '../../utils/api/fetchFeedback';
+import { useQuery } from '@tanstack/react-query';
 import EmptyFeedback from '../NoFeedback/NoFeedback.component';
 import FeedbackCard from '../FeedbackCard/FeedbackCard.component';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,27 +7,18 @@ import { setFeedback } from '../../redux/actions/feedbackActions';
 import './FeedbackCards.styles.scss';
 
 function FeedbackCards() {
+	const dispatch = useDispatch();
 	const { feedback, amount } = useSelector(
 		(state: { allFeedback: { feedback: any[]; amount: number } }) =>
 			state.allFeedback
 	);
-
-	const dispatch = useDispatch();
-
-	// Fetch Feedback
-	const fetchFeedback = async () => {
-		const response = await axios
-			.get('https://product-feedback-api-t6wx.onrender.com/')
-			.catch((err) => {
-				console.log('Err: ', err);
-			});
-		if (response && response.data) {
+	useQuery(['feedback'], fetchFeedback, {
+		onSuccess: (response) => {
 			dispatch(setFeedback(response.data));
-		}
-	};
-
-	useEffect(() => {
-		fetchFeedback();
+		},
+		onError: (error) => {
+			console.log('Error: ', error);
+		},
 	});
 
 	if (amount === 0) {

@@ -2,22 +2,36 @@ import Home from './pages/Home/Home.component';
 import NewFeedback from './pages/NewFeedback/NewFeedback.component';
 import FeedbackCardDetail from './pages/FeedbackCardDetail/FeedbackCardDetail.component';
 import EditFeedback from './pages/EditFeedback/EditFeedback.component';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.styles.scss';
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: Infinity,
+		},
+	},
+});
 
 function App() {
 	return (
 		<div className='container'>
 			<Router>
-				<Switch>
-					<Route exact path='/' component={Home} />
-					<Route path={'/new-feedback'} component={NewFeedback} />
-					<Route
-						path={'/feedback-product/:id'}
-						component={FeedbackCardDetail}
-					/>
-					<Route path={'/edit-feedback/:id'} component={EditFeedback} />
-				</Switch>
+				<QueryClientProvider client={queryClient}>
+					<Routes>
+						<Route
+							path={'/feedback-product/:id'}
+							element={<FeedbackCardDetail match={undefined} />}
+						/>
+						<Route path={'/edit-feedback/:id'} element={<EditFeedback />} />
+						<Route
+							path={'/new-feedback'}
+							element={<NewFeedback history={undefined} />}
+						/>
+						<Route path='/' element={<Home />} />
+					</Routes>
+				</QueryClientProvider>
 			</Router>
 		</div>
 	);
