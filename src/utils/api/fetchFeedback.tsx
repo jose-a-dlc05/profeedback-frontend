@@ -5,7 +5,7 @@ export interface Feedback {
 	feedbackText: string;
 }
 
-const fetchFeedback = async ({ queryKey }) => {
+export const fetchFeedback = async ({ queryKey }) => {
 	const response = await axios
 		// .get('https://product-feedback-api-t6wx.onrender.com/')
 		.get<Feedback[]>('http://localhost:8000')
@@ -19,5 +19,3 @@ const fetchFeedback = async ({ queryKey }) => {
 
 	return response;
 };
-
-export default fetchFeedback;

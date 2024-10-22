@@ -1,4 +1,4 @@
-import fetchFeedback, { Feedback } from '../../utils/api/fetchFeedback';
+import { fetchFeedback } from '../../utils/api/fetchFeedback';
 import { useQuery } from '@tanstack/react-query';
 import EmptyFeedback from '../NoFeedback/NoFeedback.component';
 import FeedbackCard from '../FeedbackCard/FeedbackCard.component';
