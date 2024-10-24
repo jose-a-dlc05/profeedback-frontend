@@ -5,22 +5,24 @@ import FeedbackCard from '../FeedbackCard/FeedbackCard.component';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFeedback } from '../../redux/actions/feedbackActions';
 import './FeedbackCards.styles.scss';
+import { useState } from 'react';
 
-function FeedbackCards() {
-	const dispatch = useDispatch();
-	const { feedback, amount } = useSelector(
-		(state: { allFeedback: { feedback: any[]; amount: number } }) =>
-			state.allFeedback
-	);
-	useQuery(['feedback'], fetchFeedback, {
-		onSuccess: (response) => {
-			dispatch(setFeedback(response.data));
-		},
-		onError: (error) => {
-			console.log('Error: ', error);
-		},
-	});
+interface Feedback {
+	id: string;
+	title: string;
+	category: string;
+	upvotes: number;
+	status: string;
+	description: string;
+}
 
+function FeedbackCards({
+	feedback,
+	amount,
+}: {
+	feedback: any[];
+	amount: number;
+}) {
 	if (amount === 0) {
 		return <EmptyFeedback />;
 	}
