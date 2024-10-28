@@ -21,16 +21,16 @@
 		background: rgb(242, 244, 255);
 		border-radius: 10px;
 		padding: 0.55em 0.85em;
-		color: rgb(70, 97, 230);
+		color: $secondary;
 		cursor: pointer;
 
 		&:hover {
-			background: rgb(70, 97, 230);
-			color: rgb(242, 244, 255);
+			background: $light-gray;
+			color: $secondary;
 		}
 	}
 	.active {
-		background: rgb(70, 97, 230);
+		background: $secondary;
 		color: rgb(242, 244, 255);
 	}
 }
