@@ -6,7 +6,6 @@ export const fetchCommentsByFeedback = async (
 ) => {
 	const { queryKey } = context;
 	const [, { id }] = queryKey;
-	console.log('ID: ', id);
 	try {
 		const response = await axios.get(`http://localhost:8000/${id}/comments`);
 		if (response.status !== 200) {

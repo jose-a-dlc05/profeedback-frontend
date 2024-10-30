@@ -19,3 +19,12 @@ export const fetchFeedback = async ({ queryKey }) => {
 
 	return response;
 };
+
+/* 
+content: string
+created_at: string
+id: string
+parent_id: string
+replying_to_user: string
+user_id: string
+*/

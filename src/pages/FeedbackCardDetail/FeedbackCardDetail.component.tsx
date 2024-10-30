@@ -1,63 +1,50 @@
-import React, {
-	useState,
-	useEffect,
-	DetailedHTMLProps,
-	HTMLAttributes,
-} from 'react';
+import React, { useState, DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Comments from '../../components/Comments/Comments.component';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import './FeedbackCardDetail.styles.scss';
 import { fetchSingleFeedback } from '../../utils/api/fetchSingleFeedback';
 import { useQuery } from '@tanstack/react-query';
+import { fetchCommentsByFeedback } from '../../utils/api';
 
-interface MatchParams {
-	params: {
-		id: string;
-	};
+interface FeedbackDetail {
+	upvotes: number;
+	title: string;
+	description: string;
+	category: string;
+}
+
+interface Comment {
+	content: string;
+	created_at: string;
+	id: string;
+	parent_id: string;
+	replying_to_user: string;
+	user_id: string;
 }
 
 function FeedbackCardDetail() {
 	const params = useParams<{ id: string }>();
-	const [singleFeedback, setSingleFeedback] = useState<{
-		upvotes: number;
-		title: string;
-		description: string;
-		category: string;
-	} | null>(null);
-	const [comments, setComments] = useState<AxiosResponse<unknown, any>[]>([]);
+	const [singleFeedback, setSingleFeedback] = useState<FeedbackDetail | null>(
+		null
+	);
+	const [comments, setComments] = useState<Comment[]>([]);
 	useQuery(['singleFeedback', { id: params.id }], fetchSingleFeedback, {
-		onSuccess: (
-			response: AxiosResponse<{
-				upvotes: number;
-				title: string;
-				description: string;
-				category: string;
-			}>
-		) => {
+		onSuccess: (response: AxiosResponse<FeedbackDetail>) => {
 			setSingleFeedback(response[0]);
 		},
 		onError: (error) => {
 			console.log('Error: ', error);
 		},
 	});
-	const getComments = async () => {
-		const response = await axios
-			.get(`http://localhost:8000/${params.id}/comments`)
-			// .get(
-			// 	`https://product-feedback-api-t6wx.onrender.com/${match.params.id}/comments`
-			// )
-			.catch((err) => {
-				console.log('Err: ', err);
-			});
-		if (response && response.data) {
-			setComments(response.data as AxiosResponse<unknown, any>[]);
-		}
-	};
-
-	useEffect(() => {
-		getComments();
-	}, []);
+	useQuery(['comments', { id: params.id }], fetchCommentsByFeedback, {
+		onSuccess: (response) => {
+			setComments(response as Comment[]);
+		},
+		onError: (error) => {
+			console.log('Error: ', error);
+		},
+	});
 
 	if (singleFeedback === null) {
 		return <div></div>;
@@ -114,7 +101,7 @@ function FeedbackCardDetail() {
 					{comments.map((comment, index) => (
 						<div key={index}>
 							<div
-								{...(comment.data as DetailedHTMLProps<
+								{...(comment as DetailedHTMLProps<
 									HTMLAttributes<HTMLDivElement>,
 									HTMLDivElement
 								>)}
