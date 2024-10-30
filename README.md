@@ -84,6 +84,7 @@ Assuming you are well versed in React and Redux, if you want to take a look at t
 - **User story:** I can delete a feedback post
 - **User story:** I can see all the feedback 
 - **User story:** I can click on a feedback title which will lead me to the details page
+- **User story:** I can filter the feedback by category through clicking on the button in the tile
 
 ## If I had more time I would change this
 
@@ -91,7 +92,6 @@ Add more functionality beyond the main CRUD functionality:
 
 - In the Main Page:
   - Ability to upvote a feedback
-  - Tile that gives ability for users to filter by category
   - A "sort by" dropdown button based on:
     - Most upvotes
     - Least upvotes
@@ -103,7 +103,6 @@ Add more functionality beyond the main CRUD functionality:
 - Inside the FeedbackDetail Page:
   - The ability to post a comment and reply to a comment
   - Have the ability box have a character counter
-  - Nest comments
 - Make the page responsive
 
 ## How To Use
