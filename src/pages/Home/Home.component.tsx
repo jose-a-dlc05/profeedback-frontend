@@ -4,8 +4,6 @@ import Banner from '../../components/Banner/Banner.component';
 import FeedbackCards from '../../components/FeedbackCards/FeedbackCards.component';
 import './Home.styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { capitalizeFirstLetter } from '../../utils/stringManipulation';
-import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchFeedback } from '../../utils/api/fetchFeedback';
 import { setFeedback } from '../../redux/actions/feedbackActions';

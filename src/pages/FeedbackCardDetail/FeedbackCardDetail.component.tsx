@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, {
+	useState,
+	useEffect,
+	DetailedHTMLProps,
+	HTMLAttributes,
+} from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Comments from '../../components/Comments/Comments.component';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import './FeedbackCardDetail.styles.scss';
+import { fetchSingleFeedback } from '../../utils/api/fetchSingleFeedback';
+import { useQuery } from '@tanstack/react-query';
 
 interface MatchParams {
 	params: {
@@ -10,34 +17,45 @@ interface MatchParams {
 	};
 }
 
-function FeedbackCardDetail({ match }: { match: MatchParams }) {
-	const [singleFeedback, setSingleFeedback] = useState(null);
-	const [comments, setComments] = useState<any[]>([]);
-	// Fetch Single Feedback
-	const fetchSingleFeedback = async () => {
-		const response = await axios
-			.get(`http://localhost:8000/${match.params.id}`)
-			// .get(`https://product-feedback-api-t6wx.onrender.com/${match.params.id}`)
-			.catch((err) => {
-				console.log('Err: ', err);
-			});
-		setSingleFeedback(response.data);
-	};
-
+function FeedbackCardDetail() {
+	const params = useParams<{ id: string }>();
+	const [singleFeedback, setSingleFeedback] = useState<{
+		upvotes: number;
+		title: string;
+		description: string;
+		category: string;
+	} | null>(null);
+	const [comments, setComments] = useState<AxiosResponse<unknown, any>[]>([]);
+	useQuery(['singleFeedback', { id: params.id }], fetchSingleFeedback, {
+		onSuccess: (
+			response: AxiosResponse<{
+				upvotes: number;
+				title: string;
+				description: string;
+				category: string;
+			}>
+		) => {
+			setSingleFeedback(response[0]);
+		},
+		onError: (error) => {
+			console.log('Error: ', error);
+		},
+	});
 	const getComments = async () => {
 		const response = await axios
-			.get(`http://localhost:8000/${match.params.id}/comments`)
+			.get(`http://localhost:8000/${params.id}/comments`)
 			// .get(
 			// 	`https://product-feedback-api-t6wx.onrender.com/${match.params.id}/comments`
 			// )
 			.catch((err) => {
 				console.log('Err: ', err);
 			});
-		setComments(response.data);
+		if (response && response.data) {
+			setComments(response.data as AxiosResponse<unknown, any>[]);
+		}
 	};
 
 	useEffect(() => {
-		fetchSingleFeedback();
 		getComments();
 	}, []);
 
@@ -58,7 +76,7 @@ function FeedbackCardDetail({ match }: { match: MatchParams }) {
 						</Link>
 					</div>
 					<Link
-						to={`/edit-feedback/${match.params.id}`}
+						to={`/edit-feedback/${params.id}`}
 						className='edit-feedback-link'
 					>
 						<button type='button' className='btn btn-edit'>
@@ -67,14 +85,16 @@ function FeedbackCardDetail({ match }: { match: MatchParams }) {
 					</Link>
 				</div>
 				<div className='feedback-card' style={{ marginTop: '25px' }}>
-					{/*	<div className='upvote-btn'>
-					 <span className='arrow-up'>^</span>
-					<span className='upvote-number'>{data.upvotes}</span> 
-					</div>*/}
+					<span className='badge upvote-btn'>
+						<span>
+							<i className='fas fa-angle-up'></i>
+						</span>
+						{singleFeedback.upvotes}
+					</span>
 					<div className='card-overview'>
-						<h4>{singleFeedback[0].title}</h4>
-						<p>{singleFeedback[0].description}</p>
-						<span>{singleFeedback[0].category}</span>
+						<h4>{singleFeedback.title}</h4>
+						<p>{singleFeedback.description}</p>
+						<span>{singleFeedback.category}</span>
 					</div>
 					<div className='comment'>
 						<span>
@@ -90,7 +110,18 @@ function FeedbackCardDetail({ match }: { match: MatchParams }) {
 					{<Comments details={comments} />}
 				</div>
 			) : (
-				<div className='comment-box'>{comments}</div>
+				<div className='comment-box'>
+					{comments.map((comment, index) => (
+						<div key={index}>
+							<div
+								{...(comment.data as DetailedHTMLProps<
+									HTMLAttributes<HTMLDivElement>,
+									HTMLDivElement
+								>)}
+							/>
+						</div>
+					))}
+				</div>
 			)}
 		</div>
 	);
