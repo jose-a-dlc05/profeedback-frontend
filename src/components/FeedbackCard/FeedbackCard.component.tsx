@@ -1,12 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './FeedbackCard.styles.scss';
+import { useMutation } from '@tanstack/react-query';
+import updateComment from '../../utils/api/updateComment';
 
 function FeedbackCard({ data }) {
+	const upvoteFeedback = useMutation(updateComment, {
+		onError: (error) => {
+			console.error('Error: ', error);
+		},
+	});
 	return (
 		<>
 			<div className='feedback-card'>
-				<span className='badge upvote-btn'>
+				<span
+					className='badge upvote-btn'
+					onClick={() => {
+						upvoteFeedback.mutate({
+							id: data.id,
+							upvotes: ++data.upvotes,
+						});
+					}}
+				>
 					<span>
 						<i className='fas fa-angle-up'></i>
 					</span>

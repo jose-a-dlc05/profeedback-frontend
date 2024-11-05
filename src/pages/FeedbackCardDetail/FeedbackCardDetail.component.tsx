@@ -1,117 +1,115 @@
-import React, { useState, DetailedHTMLProps, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Comments from '../../components/Comments/Comments.component';
-import { AxiosResponse } from 'axios';
 import './FeedbackCardDetail.styles.scss';
 import { fetchSingleFeedback } from '../../utils/api/fetchSingleFeedback';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchCommentsByFeedback } from '../../utils/api';
-
-interface FeedbackDetail {
-	upvotes: number;
-	title: string;
-	description: string;
-	category: string;
-}
-
-interface Comment {
-	content: string;
-	created_at: string;
-	id: string;
-	parent_id: string;
-	replying_to_user: string;
-	user_id: string;
-}
+import updateComment from '../../utils/api/updateComment';
 
 function FeedbackCardDetail() {
 	const params = useParams<{ id: string }>();
-	const [singleFeedback, setSingleFeedback] = useState<FeedbackDetail | null>(
-		null
+	const { data: singleFeedbackData, isLoading: feedbackLoading } = useQuery(
+		['singleFeedback', { id: params.id }],
+		fetchSingleFeedback,
+		{
+			onError: (error) => {
+				console.error('Error: ', error);
+			},
+		}
 	);
-	const [comments, setComments] = useState<Comment[]>([]);
-	useQuery(['singleFeedback', { id: params.id }], fetchSingleFeedback, {
-		onSuccess: (response: AxiosResponse<FeedbackDetail>) => {
-			setSingleFeedback(response[0]);
-		},
+	const { data: commentsByFeedbackData } = useQuery(
+		['comments', { id: params.id }],
+		fetchCommentsByFeedback,
+		{
+			onError: (error) => {
+				console.error('Error: ', error);
+			},
+		}
+	);
+	const upvoteFeedback = useMutation(updateComment, {
 		onError: (error) => {
-			console.log('Error: ', error);
-		},
-	});
-	useQuery(['comments', { id: params.id }], fetchCommentsByFeedback, {
-		onSuccess: (response) => {
-			setComments(response as Comment[]);
-		},
-		onError: (error) => {
-			console.log('Error: ', error);
+			console.error('Error: ', error);
 		},
 	});
 
-	if (singleFeedback === null) {
+	if (feedbackLoading) {
 		return <div></div>;
 	}
-	const commentNumber = Number(typeof comments !== 'string' && comments.length);
-	return (
-		<div className='feedback-card-detail'>
-			<div className='feedback-detail'>
-				<div className='feedback-control'>
-					<div className='link-wrapper'>
-						<Link to='/' className='go-back-link'>
-							<span>
-								<i className='fas fa-angle-left'></i>
-							</span>
-							Go Back
+	if (!feedbackLoading) {
+		return (
+			<div className='feedback-card-detail'>
+				<div className='feedback-detail'>
+					<div className='feedback-control'>
+						<div className='link-wrapper'>
+							<Link to='/' className='go-back-link'>
+								<span>
+									<i className='fas fa-angle-left'></i>
+								</span>
+								Go Back
+							</Link>
+						</div>
+						<Link
+							to={`/edit-feedback/${params.id}`}
+							className='edit-feedback-link'
+						>
+							<button type='button' className='btn btn-edit'>
+								Edit Feedback
+							</button>
 						</Link>
 					</div>
-					<Link
-						to={`/edit-feedback/${params.id}`}
-						className='edit-feedback-link'
-					>
-						<button type='button' className='btn btn-edit'>
-							Edit Feedback
-						</button>
-					</Link>
-				</div>
-				<div className='feedback-card' style={{ marginTop: '25px' }}>
-					<span className='badge upvote-btn'>
-						<span>
-							<i className='fas fa-angle-up'></i>
+					<div className='feedback-card' style={{ marginTop: '25px' }}>
+						<span
+							className='badge upvote-btn'
+							onClick={() => {
+								upvoteFeedback.mutate({
+									id: singleFeedbackData[0].id,
+									upvotes: ++singleFeedbackData[0].upvotes,
+								});
+							}}
+						>
+							<span>
+								<i className='fas fa-angle-up'></i>
+							</span>
+							{singleFeedbackData[0].upvotes}
 						</span>
-						{singleFeedback.upvotes}
-					</span>
-					<div className='card-overview'>
-						<h4>{singleFeedback.title}</h4>
-						<p>{singleFeedback.description}</p>
-						<span>{singleFeedback.category}</span>
-					</div>
-					<div className='comment'>
-						<span>
-							<i className='fas fa-comment'></i>
-						</span>
-						<span>{commentNumber}</span>
-					</div>
-				</div>
-			</div>
-			{commentNumber ? (
-				<div className='comment-box'>
-					<h5 className='comment-number'>{commentNumber} Comments</h5>
-					{<Comments details={comments} />}
-				</div>
-			) : (
-				<div className='comment-box'>
-					{comments.map((comment, index) => (
-						<div key={index}>
-							<div
-								{...(comment as DetailedHTMLProps<
-									HTMLAttributes<HTMLDivElement>,
-									HTMLDivElement
-								>)}
-							/>
+						<div className='card-overview'>
+							<h4>{singleFeedbackData[0].title}</h4>
+							<p>{singleFeedbackData[0].description}</p>
+							<span>{singleFeedbackData[0].category}</span>
 						</div>
-					))}
+						<div className='comment'>
+							<span>
+								<i className='fas fa-comment'></i>
+							</span>
+							<span>{commentsByFeedbackData.length}</span>
+						</div>
+					</div>
 				</div>
-			)}
-		</div>
-	);
+				{commentsByFeedbackData ? (
+					<div className='comment-box'>
+						<h5 className='comment-number'>
+							{commentsByFeedbackData.length} Comments
+						</h5>
+						{<Comments details={commentsByFeedbackData} />}
+					</div>
+				) : (
+					<div className='comment-box'>
+						{commentsByFeedbackData.map((comment, index) => (
+							<div key={index}>
+								<div
+									{...(comment as DetailedHTMLProps<
+										HTMLAttributes<HTMLDivElement>,
+										HTMLDivElement
+									>)}
+								/>
+							</div>
+						))}
+					</div>
+				)}
+			</div>
+		);
+	}
 }
 
 export default FeedbackCardDetail;

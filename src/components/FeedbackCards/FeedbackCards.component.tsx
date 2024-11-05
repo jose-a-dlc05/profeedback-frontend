@@ -1,11 +1,6 @@
-import { fetchFeedback } from '../../utils/api/fetchFeedback';
-import { useQuery } from '@tanstack/react-query';
 import EmptyFeedback from '../NoFeedback/NoFeedback.component';
 import FeedbackCard from '../FeedbackCard/FeedbackCard.component';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFeedback } from '../../redux/actions/feedbackActions';
 import './FeedbackCards.styles.scss';
-import { useState } from 'react';
 
 interface Feedback {
 	id: string;

@@ -34,7 +34,7 @@ function NewFeedback({ history }) {
 			category,
 			feedback_detail,
 		};
-		if (feedback_detail || feedback_detail) {
+		if (feedback_detail) {
 			await axios
 				.post('https://product-feedback-api-t6wx.onrender.com/', newFeedback)
 				.catch((err) => {
@@ -102,7 +102,7 @@ function NewFeedback({ history }) {
 								value={inputState.feedback_detail}
 								onChange={handleChange}
 								name='feedback_detail'
-								maxLength='255'
+								maxLength={255}
 							></textarea>
 						</label>
 					</div>

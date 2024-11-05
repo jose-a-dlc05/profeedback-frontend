@@ -31,7 +31,6 @@ function Home() {
 			},
 		}
 	);
-
 	const filteredFeedback = filter
 		? feedbackData?.data?.filter((item: any) => item.category === filter)
 		: feedbackData?.data || [];
