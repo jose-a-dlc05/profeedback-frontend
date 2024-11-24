@@ -7,8 +7,8 @@ export interface Feedback {
 
 export const fetchFeedback = async ({ queryKey }) => {
 	const response = await axios
-		// .get('https://product-feedback-api-t6wx.onrender.com/')
-		.get<Feedback[]>('http://localhost:8000')
+		.get('https://product-feedback-api-t6wx.onrender.com/')
+		// .get<Feedback[]>('http://localhost:8000')
 		.catch((err) => {
 			console.error('Error getting feedback: ', err);
 		});

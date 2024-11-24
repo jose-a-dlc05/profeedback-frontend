@@ -9,7 +9,7 @@ const updateComment = async (newComment: {
 	id: string;
 }) => {
 	const response = await axios.patch(
-		`http://localhost:8000/${newComment.id}`,
+		`https://product-feedback-api-t6wx.onrender.com/${newComment.id}`,
 		newComment
 	);
 	return response.data;

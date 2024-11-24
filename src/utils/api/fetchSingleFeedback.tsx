@@ -7,7 +7,9 @@ export const fetchSingleFeedback = async (
 	const { queryKey } = context;
 	const [, { id }] = queryKey;
 	try {
-		const response = await axios.get(`http://localhost:8000/${id}`);
+		const response = await axios.get(
+			`https://product-feedback-api-t6wx.onrender.com/${id}`
+		);
 		if (response.status !== 200) {
 			throw new Error('No data returned from server');
 		}
